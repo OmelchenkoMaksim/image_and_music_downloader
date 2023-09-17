@@ -24,6 +24,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.storageformusicandimages.databinding.FragmentFirstBinding
 import okhttp3.*
 import java.io.IOException
@@ -62,10 +63,15 @@ class FirstFragment : Fragment() {
         val a = {}
         val b = null
 
+        binding.buttonToSecond.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
         binding.buttonDownload.setOnClickListener {
             if (urlFromEditText.length > 7) {
                 progressBar.isVisible = true
-                if (binding.inputUrlForSongDownloD.text.toString().length <= 1) {
+                if (binding.inputSongUrl.text.toString().length <= 1) {
                     val imageFilename = "image${(Math.random() * 1000).toInt()}.jpg"
                     downloadAndSaveMedia(urlFromEditText, imageFilename, "image/jpeg")
                     Log.e(
@@ -94,23 +100,23 @@ class FirstFragment : Fragment() {
             ).show()
         }
 
-        binding.inputUrlForImageDownload.addTextChangedListener {
+        binding.inputImageUrl.addTextChangedListener {
             urlFromEditText = it.toString()
             Log.e("mylog", urlFromEditText)
         }
 
-        binding.inputUrlForImageDownload.doAfterTextChanged {
-            binding.inputUrlForSongDownloD.text?.clear()
+        binding.inputImageUrl.doAfterTextChanged {
+            binding.inputSongUrl.text?.clear()
         }
 
-        binding.inputUrlForSongDownloD.addTextChangedListener {
+        binding.inputSongUrl.addTextChangedListener {
             urlFromEditText = it.toString()
             Log.e("mylog", urlFromEditText)
-            binding.inputUrlForImageDownload.text?.clear()
+            binding.inputImageUrl.text?.clear()
         }
 
-        binding.inputUrlForSongDownloD.doAfterTextChanged {
-            binding.inputUrlForImageDownload.text?.clear()
+        binding.inputSongUrl.doAfterTextChanged {
+            binding.inputImageUrl.text?.clear()
         }
     }
 
@@ -201,9 +207,11 @@ class FirstFragment : Fragment() {
         // нотификации
         requireActivity().runOnUiThread {
             progressBar.isVisible = false
+            Toast.makeText(requireActivity(), "Completed!", Toast.LENGTH_SHORT).show()
         }
         showNotification(filename, mediaUri)
     }
+
 
     @SuppressLint("MissingPermission")
     private fun showNotification(filename: String, uri: Uri) {
@@ -213,10 +221,12 @@ class FirstFragment : Fragment() {
         }
 
         val pendingIntent =
-            PendingIntent.getActivity(context, 0, intent,
+            PendingIntent.getActivity(
+                context, 0, intent,
                 // С Android 12 при создании PendingIntent вам необходимо указать один из флагов:
                 // FLAG_IMMUTABLE или FLAG_MUTABLE. И FLAG_UPDATE_CURRENT не отменяет это правило
-                PendingIntent.FLAG_IMMUTABLE)
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
         val channelId = "downloadChannel"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

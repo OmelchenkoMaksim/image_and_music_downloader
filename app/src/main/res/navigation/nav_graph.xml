@@ -12,6 +12,14 @@
         tools:layout="@layout/fragment_first">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment" />
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.example.storageformusicandimages.SecondFragment"
+        android:label="second_fragment_label"
+        tools:layout="@layout/fragment_second">
     </fragment>
 </navigation>

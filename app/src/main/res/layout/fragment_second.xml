@@ -12,57 +12,70 @@
         android:padding="16dp"
         tools:context=".FirstFragment">
 
-        <ProgressBar
-            android:id="@+id/download_progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:indeterminate="false"
-            android:visibility="invisible"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
         <Button
-            android:id="@+id/button_download"
+            android:id="@+id/button_save_to_prefs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
-            android:text="@string/download"
-            app:layout_constraintBottom_toTopOf="@id/input_image_url"
+            android:text="Сохранить в префы"
+            app:layout_constraintBottom_toTopOf="@id/input_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_load_from_prefs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="150dp"
+            android:text="Загрузить из префов"
+            app:layout_constraintBottom_toTopOf="@id/button_save_to_prefs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/input_image_url"
+            android:id="@+id/input_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
-            android:hint="Вставь урл картинки в меня"
+            android:hint="Вставь имя пользака"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_download" />
+            app:layout_constraintTop_toBottomOf="@id/button_save_to_prefs" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/input_song_url"
+            android:id="@+id/input_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
-            android:hint="Вставь урл песни в меня"
+            android:hint="Вставь пороль"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_image_url" />
-
+            app:layout_constraintTop_toBottomOf="@id/input_name" />
 
         <Button
-            android:id="@+id/button_to_second"
+            android:id="@+id/button_save_to_keystore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="На второй экран"
+            android:text="Сохранить в кейстор"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_song_url" />
+            app:layout_constraintTop_toBottomOf="@id/input_password" />
+
+        <Button
+            android:id="@+id/button_load_from_keystore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Загрузить из кейстор"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_save_to_keystore" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
