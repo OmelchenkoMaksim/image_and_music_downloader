@@ -141,19 +141,15 @@ class FirstFragment : Fragment() {
                         val input = responseBody.byteStream()
                         saveMediaToStorage(input, filename, mimeType)
                         // ниже onBytesRead для прогресс-бара
-                        { bytesRead ->
-                            bytesReadSoFar += bytesRead
-                            val progress = if (contentLength > 0) {
-                                (bytesReadSoFar * 100 / contentLength).toInt()
-                            } else bytesReadSoFar.toInt()
-                            Log.e(
-                                "mylog", "progress $progress and bytesReadbytesReadSoFar " +
-                                        "$bytesReadSoFar and bytesRead $bytesRead"
-                            )
-                            requireActivity().runOnUiThread {
-                                progressBar.progress = progress
-                            }
-                        }
+//                        { bytesRead ->
+//                            bytesReadSoFar += bytesRead
+//                            val progress = if (contentLength > 0) {
+//                                (bytesReadSoFar * 100 / contentLength).toInt()
+//                            } else bytesReadSoFar.toInt()
+//                            requireActivity().runOnUiThread {
+//                                progressBar.progress = progress
+//                            }
+//                        }
                     }
                 } else {
                     requireActivity().runOnUiThread {
@@ -176,7 +172,7 @@ class FirstFragment : Fragment() {
         inputStream: InputStream, filename: String,
         mimeType: String,
         // для спиннера - прогресс бара
-        onBytesRead: (bytesRead: Int) -> Unit
+        onBytesRead: ((bytesRead: Int) -> Unit)? = null
     ) {
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
@@ -196,7 +192,9 @@ class FirstFragment : Fragment() {
             while (inputStream.read(buffer).also { bytesRead = it } != -1) {
                 os.write(buffer, 0, bytesRead)
                 // onBytesRead функция для прогресс-бара
-                onBytesRead(bytesRead)
+                if (onBytesRead != null) {
+                    onBytesRead(bytesRead)
+                }
             }
         }
         inputStream.close()
@@ -215,7 +213,10 @@ class FirstFragment : Fragment() {
         }
 
         val pendingIntent =
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(context, 0, intent,
+                // С Android 12 при создании PendingIntent вам необходимо указать один из флагов:
+                // FLAG_IMMUTABLE или FLAG_MUTABLE. И FLAG_UPDATE_CURRENT не отменяет это правило
+                PendingIntent.FLAG_IMMUTABLE)
 
         val channelId = "downloadChannel"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
