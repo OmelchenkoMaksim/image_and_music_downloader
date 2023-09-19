@@ -142,11 +142,11 @@ class FirstFragment : Fragment() {
                 if (response.isSuccessful) {
                     response.body?.let { responseBody ->
                         val contentLength = responseBody.contentLength()
-                        var bytesReadSoFar: Long = 0
                         Log.e("mylog", "contentLength $contentLength")
                         val input = responseBody.byteStream()
                         saveMediaToStorage(input, filename, mimeType)
                         // ниже onBytesRead для прогресс-бара
+//                        var bytesReadSoFar: Long = 0
 //                        { bytesRead ->
 //                            bytesReadSoFar += bytesRead
 //                            val progress = if (contentLength > 0) {

@@ -21,5 +21,17 @@
         android:name="com.example.storageformusicandimages.SecondFragment"
         android:label="second_fragment_label"
         tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_RoomFragment"
+            app:destination="@id/RoomFragment" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/RoomFragment"
+        android:name="com.example.storageformusicandimages.room.RoomFragment"
+        android:label="room_fragment_label"
+        tools:layout="@layout/fragment_room" />
+
 </navigation>

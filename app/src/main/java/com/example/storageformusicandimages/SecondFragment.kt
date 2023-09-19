@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.example.storageformusicandimages.databinding.FragmentSecondBinding
@@ -42,6 +43,11 @@ class SecondFragment : Fragment() {
             val (username, password) = loadFromPrefs()
             val message = "Имя: $username, Пароль: $password"
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.buttonToRoomScreen.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(R.id.action_SecondFragment_to_RoomFragment)
         }
     }
 

@@ -4,10 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-<!--для сервиса-->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <!--для сервиса-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
